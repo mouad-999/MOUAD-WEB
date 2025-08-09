@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MOUAD EL HADIRI</title>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+
+    body,
+    html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      font-family: 'Poppins', sans-serif;
+      background: black;
+      color: #0f0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      text-align: center;
+    }
+
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+
+    h1 {
+      z-index: 1;
+      font-size: clamp(3rem, 8vw, 5rem);
+      margin: 0;
+      padding-bottom: 0;
+      color: #eee;
+      font-weight: 900;
+      letter-spacing: 5px;
+      user-select: none;
+      /* 3D text effect with multiple shadows */
+      text-shadow:
+        2px 2px 0 #0f0,
+        4px 4px 0 #0c0,
+        6px 6px 10px #0a0,
+        0 0 20px #0f0,
+        0 0 30px #0f0;
+      transition: transform 0.3s ease, text-shadow 0.3s ease;
+      cursor: default;
+    }
+
+    /* عند hover على الاسم */
+    h1:hover {
+      transform: scale(1.1);
+      text-shadow:
+        3px 3px 0 #7fff7f,
+        6px 6px 0 #66ff66,
+        9px 9px 15px #33cc33,
+        0 0 25px #7fff7f,
+        0 0 40px #66ff66;
+    }
+
+    /* تأثير fade-in للنصوص تحت الاسم */
+    .description,
+    .sub-description {
+      font-family: monospace;
+      color: #90ee90;
+      margin: 0;
+      margin-top: 5px;
+      font-size: 1.2rem;
+      opacity: 0;
+      animation: fadeInText 2s forwards;
+      user-select: none;
+      text-align: center;
+      border: none;
+    }
+
+    .sub-description {
+      font-size: 1rem;
+      margin-top: 3px;
+      animation-delay: 2.3s;
+      color: #aaf0aa;
+    }
+
+    .description {
+      animation-delay: 1.8s;
+    }
+
+    @keyframes fadeInText {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .social-links {
+      z-index: 1;
+      display: flex;
+      gap: 35px;
+      margin-top: 30px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .social-links a {
+      position: relative;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      text-decoration: none;
+      box-shadow: 0 0 10px rgba(0, 255, 0, 0.7);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      user-select: none;
+      color: white;
+      font-size: 1.8rem;
+      cursor: pointer;
+    }
+
+    /* ألوان كل منصة اجتماعية */
+    .facebook {
+      background: #1877f2;
+      color: white;
+      box-shadow: 0 0 15px #1877f2;
+    }
+    .facebook:hover {
+      box-shadow: 0 0 30px #1877f2;
+      transform: scale(1.3);
+    }
+
+    .email {
+      background: #d44638;
+      color: white;
+      box-shadow: 0 0 15px #d44638;
+    }
+    .email:hover {
+      box-shadow: 0 0 30px #d44638;
+      transform: scale(1.3);
+    }
+
+    .discord {
+      background: #5865f2;
+      color: white;
+      box-shadow: 0 0 15px #5865f2;
+    }
+    .discord:hover {
+      box-shadow: 0 0 30px #5865f2;
+      transform: scale(1.3);
+    }
+
+    .whatsapp {
+      background: #25d366;
+      color: white;
+      box-shadow: 0 0 15px #25d366;
+    }
+    .whatsapp:hover {
+      box-shadow: 0 0 30px #25d366;
+      transform: scale(1.3);
+    }
+
+    .instagram {
+      background: radial-gradient(
+        circle at 30% 107%,
+        #fdf497 0%,
+        #fdf497 5%,
+        #fd5949 45%,
+        #d6249f 60%,
+        #285aeb 90%
+      );
+      color: white;
+      box-shadow: 0 0 15px #d6249f;
+    }
+    .instagram:hover {
+      box-shadow: 0 0 30px #d6249f;
+      transform: scale(1.3);
+    }
+
+    .github {
+      background: #333;
+      color: white;
+      box-shadow: 0 0 15px #999;
+    }
+    .github:hover {
+      box-shadow: 0 0 30px #999;
+      transform: scale(1.3);
+    }
+
+    .spotify {
+      background: #1DB954;
+      color: white;
+      box-shadow: 0 0 15px #1DB954;
+    }
+    .spotify:hover {
+      box-shadow: 0 0 30px #1DB954;
+      transform: scale(1.3);
+    }
+
+    /* أسماء المواقع - مخفية */
+    .social-links a span {
+      position: absolute;
+      bottom: -28px;
+      left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      font-size: 0.75rem;
+      color: #0f0;
+      font-weight: 600;
+      font-family: monospace;
+      letter-spacing: 1.5px;
+      text-shadow: 0 0 4px #0f0;
+      opacity: 0;
+      pointer-events: none;
+      white-space: nowrap;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      user-select: none;
+    }
+
+    /* تظهر عند hover */
+    .social-links a:hover span {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+      pointer-events: auto;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="matrix"></canvas>
+
+  <h1>MOUAD EL HADIRI</h1>
+  <p class="description">hacking and Cybersecurity</p>
+  <p class="sub-description">Find me on these platforms</p>
+
+  <div class="social-links">
+    <a href="https://www.facebook.com/movvaad/?locale=ar_AR" class="facebook" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+      <i class="fab fa-facebook-f"></i>
+      <span>FACEBOOK</span>
+    </a>
+     <a href="mailto:madalhadry016@gmail.com" class="email" aria-label="Email">
+      <i class="fas fa-envelope"></i>
+      <span>EMAIL</span>
+    </a>
+    <a href="https://discord.gg/SG3ea8kMAG" class="discord" aria-label="Discord" target="_blank" rel="noopener noreferrer">
+      <i class="fab fa-discord"></i>
+      <span>DISCORD</span>
+    </a>
+    <a href="https://wa.me/212777375980" class="whatsapp" aria-label="WhatsApp" target="_blank" rel="noopener noreferrer">
+      <i class="fab fa-whatsapp"></i>
+      <span>WHATSAPP</span>
+    </a>
+    <a href="https://www.instagram.com/mou_a2d/" class="instagram" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+      <i class="fab fa-instagram"></i>
+      <span>INSTAGRAM</span>
+    </a>
+    <a href="https://github.com/MOUAD-ELHADIRI" class="github" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
+      <i class="fab fa-github"></i>
+      <span>GITHUB</span>
+    </a>
+    <a href="https://open.spotify.com/user/31muykzn3dfqy4ne6cibk5ol22ti?si=991b67a3e4a74ab8" class="spotify" aria-label="Spotify" target="_blank" rel="noopener noreferrer">
+      <i class="fab fa-spotify"></i>
+      <span>SPOTIFY</span>
+    </a>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('matrix'),
+      ctx = canvas.getContext('2d');
+    let w, h, cols, drops;
+    const fontSize = 18,
+      chars = '01ABCDEFGHIJKLMNOPQRSTUVWXYZ@#$%&*';
+    function initMatrix() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+      cols = Math.floor(w / fontSize);
+      drops = Array(cols).fill(1);
+    }
+    function draw() {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+      ctx.fillRect(0, 0, w, h);
+      ctx.fillStyle = '#0f0';
+      ctx.font = fontSize + 'px monospace';
+      drops.forEach((y, x) => {
+        const text = chars.charAt(Math.floor(Math.random() * chars.length));
+        ctx.fillText(text, x * fontSize, y * fontSize);
+        drops[x] = y * fontSize > h && Math.random() > 0.995 ? 0 : y + 0.5;
+      });
+      requestAnimationFrame(draw);
+    }
+    window.addEventListener('resize', initMatrix);
+    initMatrix();
+    draw();
+  </script>
+</body>
+</html>
